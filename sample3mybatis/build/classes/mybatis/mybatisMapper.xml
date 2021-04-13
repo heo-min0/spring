@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 우리가 설정해 놓을 Query문이 들어감 -->
+<mapper namespace="mybatis.MyBatisMapper">
+
+<!-- <insert, delete, select, update    id = "외부에서 호출할 문자열"
+parameterType="object"
+resultType="object">
+
+쿼리 #{외부로 부터 들어오는 값 core tag과 비슷
+	${ 숫자 } 안될때도 있음
+
+ -->
+<insert id="add" parameterType="dto.MemberDto">
+	INSERT INTO MEMBERDTO(ID, PWD, EMAIL)
+	VALUES( #{id}, #{pwd}, #{email} )
+</insert>
+
+<!-- <delete id="del" parameterType="dto.MemberDto"> -->
+<delete id="del" parameterType="java.lang.String">
+	DELETE FROM MEMBERDTO WHERE ID=#{id}
+</delete>
+
+<update id="upd" parameterType="dto.MemberDto">
+	UPDATE MEMBERDTO SET EMAIL=#{email} WHERE ID=#{id}
+</update>
+
+<select id="find" parameterType="java.lang.String" resultType="dto.MemberDto">
+	SELECT * FROM MEMBERDTO WHERE ID=#{id} <!-- 안에 들어갈때 'val'로 들어감 -->
+</select>
+
+<select id="allData" resultType="dto.MemberDto">
+	SELECT * FROM MEMBERDTO
+</select>
+
+<!-- <select id="bbsSearch" parameterType="dto.BbsParam" resultType="dto.BbsDto">
+	SELECT * FROM BBS WHERE 1=1 
+	<if test="s_category == 'title' ">
+		AND TITLE LIKE '%'||#{keyword}||'%'
+	</if>
+	<if test="s_category == 'content' ">
+		AND CONTENT LIKE '%'||#{keyword}||'%'
+	</if>
+	<if test="s_category == 'id' ">
+		AND ID=#{keyword}
+	</if>
+</select> -->
+
+<select id="bbsSearch" parameterType="dto.BbsParam" resultType="dto.BbsDto">
+	SELECT * FROM BBS WHERE 1=1 
+	<choose>
+		<when test="s_category == 'title' ">
+			AND TITLE LIKE '%'||#{keyword}||'%'
+		</when>
+		<when test="s_category == 'content' ">
+			AND CONTENT LIKE '%'||#{keyword}||'%'
+		</when>
+		<when test="s_category == 'id' ">
+			AND ID=#{keyword}
+		</when>
+		<otherwise></otherwise>
+	</choose>
+</select>
+
+
+
+</mapper>
+
+
