@@ -76,12 +76,14 @@ public class MainClass {
 		}*/
 		
 		//BBS select
-		BbsParam param = new BbsParam("title", "0");
+		/*BbsParam param = new BbsParam("title", "0");
 		List<BbsDto> list = session.selectList("bbsSearch", param);
 		for (BbsDto bbs : list) {
 			System.out.println(bbs.toString());
-		}
+		}*/
 		
+		String a = session.selectOne("getmember","aaa");
+		System.out.println("rhkdus:"+a);
 		
 	}
 

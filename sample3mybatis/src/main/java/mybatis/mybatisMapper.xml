@@ -65,7 +65,9 @@ resultType="object">
 	</choose>
 </select>
 
-
+<select id="getmember" parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT EMAIL FROM MEMBER WHERE ID=#{id}
+</select>
 
 </mapper>
 
