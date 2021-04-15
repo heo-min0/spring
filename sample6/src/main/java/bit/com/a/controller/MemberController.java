@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import bit.com.a.dto.BbsParam;
 import bit.com.a.dto.MemberDto;
 import bit.com.a.service.MemberService;
 
@@ -65,18 +66,18 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value = "loginAF.do", method = { RequestMethod.GET, RequestMethod.POST })
-	private String loginAF(MemberDto dto, HttpServletRequest req) {
+	private String loginAF(MemberDto dto, HttpServletRequest req, Model model) {
 		logger.info("MemberController loginAF" + new Date());
 		
 		MemberDto mem = memberService.login(dto);
-		System.out.println(mem.toString());
 		if(mem != null && !mem.getId().equals("")) {
+			System.out.println(mem.toString());
 
 			//session 저장
 			req.getSession().setAttribute("login", mem);
 			
 			//bbslist 이동
-			return "redirect:/bbslist.do"; //sendRedirect,  forward:forward
+			return "redirect:/pagebbslist.do"; //sendRedirect,  forward:forward
 		}
 		else { //로그인 실패시
 			return "redirect:/login.do";
