@@ -27,14 +27,14 @@ public class MemberController {
 
 	@RequestMapping(value = "login.do", method = { RequestMethod.GET, RequestMethod.POST })
 	private String login() {
-		logger.info("MemberController login" + new Date());
+		//logger.info("MemberController login" + new Date());
 
 		return "login";
 	}
 
 	@RequestMapping(value = "regi.do", method = { RequestMethod.GET, RequestMethod.POST })
 	private String regi() {
-		logger.info("MemberController regi" + new Date());
+		//logger.info("MemberController regi" + new Date());
 
 		return "regi";
 	}
@@ -42,7 +42,7 @@ public class MemberController {
 	@ResponseBody
 	@RequestMapping(value = "idchk.do", method = { RequestMethod.GET, RequestMethod.POST })
 	private String idchk(String id) {
-		logger.info("MemberController idchk" + new Date());
+		//logger.info("MemberController idchk" + new Date());
 		
 		String str = "";
 		str = memberService.getMember(id);
@@ -52,8 +52,8 @@ public class MemberController {
 	
 	@RequestMapping(value = "regiAF.do", method = { RequestMethod.GET, RequestMethod.POST })
 	private String regiAF(MemberDto dto) {
-		logger.info("MemberController regiAF" + new Date());
-		System.out.println(dto.toString());
+		//logger.info("MemberController regiAF" + new Date());
+		//System.out.println(dto.toString());
 		
 		int count = memberService.addMember(dto);
 		
@@ -66,13 +66,14 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value = "loginAF.do", method = { RequestMethod.GET, RequestMethod.POST })
-	private String loginAF(MemberDto dto, HttpServletRequest req, Model model) {
-		logger.info("MemberController loginAF" + new Date());
+	private String loginAF(MemberDto dto, HttpServletRequest req) {
+		//logger.info("MemberController loginAF " + new Date());
+		System.out.println(dto.toString());
 		
 		MemberDto mem = memberService.login(dto);
 		if(mem != null && !mem.getId().equals("")) {
-			System.out.println(mem.toString());
-
+			//System.out.println(mem.toString());
+			
 			//session 저장
 			req.getSession().setAttribute("login", mem);
 			

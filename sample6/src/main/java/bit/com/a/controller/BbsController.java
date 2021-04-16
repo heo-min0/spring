@@ -27,7 +27,7 @@ public class BbsController {
 	
 	@RequestMapping(value = "bbslist.do", method = RequestMethod.GET)
 	public String bbslist(Model model) {
-		logger.info("BbsController bbslist" + new Date());
+		//logger.info("BbsController bbslist" + new Date());
 		
 		List<BbsDto> list = bbsService.getBbsList();
 		model.addAttribute("list",list);
@@ -36,7 +36,7 @@ public class BbsController {
 	
 	@RequestMapping(value = "pagebbslist.do", method = RequestMethod.GET)
 	public String pagebbslist(BbsParam p, Model model) {
-		logger.info("BbsController pagebbslist" + new Date());
+		//logger.info("BbsController pagebbslist" + new Date());
 		System.out.println(p.toString());
 		
 		List<BbsDto> list = bbsService.getBbsList(p);
@@ -51,13 +51,13 @@ public class BbsController {
 	
 	@RequestMapping(value = "bbswrite.do", method = RequestMethod.GET)
 	public String bbswrite() {
-		logger.info("BbsController bbswrite " + new Date());
+		//logger.info("BbsController bbswrite " + new Date());
 		return "bbswrite";
 	}
 	
 	@RequestMapping(value = "writeAF.do", method = RequestMethod.POST)
 	public String writeAF(BbsDto dto) {
-		logger.info("BbsController writeAF " + new Date());
+		//logger.info("BbsController writeAF " + new Date());
 		System.out.println(dto.toString());
 		
 		int count = bbsService.writeBbs(dto);
@@ -74,7 +74,7 @@ public class BbsController {
 	
 	@RequestMapping(value = "bbsdetail.do", method = RequestMethod.GET)
 	public String bbsdetail(BbsDto dto, Model model) {
-		logger.info("BbsController bbsdetail " + new Date());
+		//logger.info("BbsController bbsdetail " + new Date());
 		System.out.println(dto.toString());
 		
 		BbsDto bbsdto = bbsService.bbsdetail(dto);
@@ -88,7 +88,7 @@ public class BbsController {
 	
 	@RequestMapping(value = "bbsanswer.do", method = RequestMethod.GET)
 	public String bbsanswer(BbsDto dto, Model model) {
-		logger.info("BbsController bbsanswer " + new Date());
+		//logger.info("BbsController bbsanswer " + new Date());
 		System.out.println(dto.toString());
 		
 		BbsDto bbsdto = bbsService.bbsdetail(dto);
@@ -99,7 +99,7 @@ public class BbsController {
 	
 	@RequestMapping(value = "answerAF.do", method = RequestMethod.POST)
 	public String answerAF(BbsDto dto) {
-		logger.info("BbsController answerAF " + new Date());
+		//logger.info("BbsController answerAF " + new Date());
 		System.out.println(dto.toString());
 		
 		int count = bbsService.bbsAnswer(dto);
@@ -113,7 +113,7 @@ public class BbsController {
 	
 	@RequestMapping(value = "bbsupdate.do", method = RequestMethod.GET)
 	public String bbsupdate(BbsDto dto, Model model) {
-		logger.info("BbsController bbsupdate " + new Date());
+		//logger.info("BbsController bbsupdate " + new Date());
 		System.out.println(dto.toString());
 		
 		BbsDto bbsdto = bbsService.bbsdetail(dto);
@@ -125,7 +125,7 @@ public class BbsController {
 	
 	@RequestMapping(value = "updateAF.do", method = RequestMethod.POST)
 	public String updateAF(BbsDto dto) {
-		logger.info("BbsController updateAF " + new Date());
+		//logger.info("BbsController updateAF " + new Date());
 		System.out.println(dto.toString());
 		
 		int count = bbsService.bbsUpdate(dto);
@@ -139,7 +139,7 @@ public class BbsController {
 	
 	@RequestMapping(value = "bbsdel.do", method = RequestMethod.GET)
 	public String bbsdel(BbsDto dto) {
-		logger.info("BbsController bbsdel " + new Date());
+		//logger.info("BbsController bbsdel " + new Date());
 		System.out.println(dto.toString());
 		
 		int count = bbsService.bbsDel(dto);

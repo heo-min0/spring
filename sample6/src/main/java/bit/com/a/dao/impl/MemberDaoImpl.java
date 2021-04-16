@@ -13,6 +13,7 @@ public class MemberDaoImpl implements MemberDao {
 	
 	@Autowired
 	SqlSession sqlSession;
+	
 	String namespace = "Member.";
 	
 	@Override
@@ -32,6 +33,5 @@ public class MemberDaoImpl implements MemberDao {
 		MemberDto mem = sqlSession.selectOne(namespace + "login", dto);
 		return mem;
 	}
-	
 	
 }

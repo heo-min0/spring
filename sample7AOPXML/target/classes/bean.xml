@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+
+	<!-- 객체생성 -->
+	<!--
+	java
+	MyClass cls = new MyClass();
+	
+	xml
+	<bean id="cls" class="com.MyClass"/>
+	
+	jsp tag
+	<jsp:useBean id="cls" class="com.MyClass"/>
+ -->
+ 	<!-- aop object 생성 -->
+ 	<bean id="logAop" class="com.aop.LogAop"/>
+ 	
+ 	<!-- AOP 설정 (자동호출) : callback, 트리거 같은 -->
+ 	<aop:config>
+	 	<aop:aspect id="logger" ref="logAop">
+	 		<aop:pointcut expression="within(com.dto.*)" id="publicM"/> <!-- 컴.dto에 있는 모든 파일이 실행되면 자동호출 시켜라 --> 
+	 		<aop:around method="loggerAop" pointcut-ref="publicM"/>
+	 	</aop:aspect>
+ 	</aop:config>
+ 	
+ 	<!-- xml Cat Object new -->
+ 	<bean id="myCat" class="com.dto.Cat">
+ 		<property name="name" value="야옹이"/>
+ 		<property name="age" value="3"/>
+ 		<property name="color" value="노랑"/> 	
+ 	</bean>
+
+
+</beans>
+
+
+
+
+
+
+
+
