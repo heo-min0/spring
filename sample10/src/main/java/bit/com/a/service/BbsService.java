@@ -10,14 +10,15 @@ public interface BbsService {
 	List<BbsDto> getBbsList(BbsParam bbs);	
 	int getBbsCount(BbsParam bbs);
 	
-	//boolean writeBbs(BbsDto dto);
+	boolean writeBbs(BbsDto dto);
 	
-	//BbsDto getBbs(int seq);
-	//void readCount(int seq);
+	BbsDto getBbs(int seq);
+	void updateBbs(BbsDto bbs);
+	void deleteBbs(int seq);
 	
-	//void reply(BbsDto bbs);		// <- 여기서 update와 insert를 모두 호출
+	void reply(BbsDto bbs);		// <- 여기서 update와 insert를 모두 호출
+
+	void readCount(int seq);
 	
-	//void deleteBbs(int seq);
 	
-	//void updateBbs(BbsDto bbs);
 }

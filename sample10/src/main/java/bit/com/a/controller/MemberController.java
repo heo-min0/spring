@@ -67,4 +67,10 @@ public class MemberController {
 		
 	}
 	
+	@RequestMapping(value = "logout.do", method = RequestMethod.GET)
+	public String logout(HttpServletRequest req) {
+		req.getSession().removeAttribute("login");
+		return "login.tiles";
+	}
+	
 }

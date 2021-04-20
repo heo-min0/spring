@@ -26,4 +26,35 @@ public class BbsServiceImpl implements BbsService{
 		return bbsDao.getBbsCount(bbs);
 	}
 
+	@Override
+	public boolean writeBbs(BbsDto dto) {
+		return bbsDao.writeBbs(dto);
+	}
+
+	@Override
+	public BbsDto getBbs(int seq) {
+		return bbsDao.getBbs(seq);
+	}
+
+	@Override
+	public void updateBbs(BbsDto bbs) {
+		bbsDao.updateBbs(bbs);
+	}
+
+	@Override
+	public void deleteBbs(int seq) {
+		bbsDao.deleteBbs(seq);
+	}
+
+	@Override
+	public void reply(BbsDto bbs) {
+		bbsDao.replyBbsUpdate(bbs);
+		bbsDao.replyBbsInsert(bbs);
+	}
+
+	@Override
+	public void readCount(int seq) {
+		bbsDao.readCount(seq);
+	}
+
 }

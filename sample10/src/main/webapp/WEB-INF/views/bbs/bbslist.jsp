@@ -39,11 +39,12 @@
   <colgroup>
   	<col style="width:70px">
   	<col style="width:auto">
+  	<col style="width:70px">
   	<col style="width:100px">
   </colgroup>
   
   <tr>
-    <th>번호</th><th>제목</th><th>작성자</th> <!-- 조회수 -->
+    <th>번호</th><th>제목</th><th>조회수</th><th>작성자</th>
   </tr>
 </table>
 
@@ -58,10 +59,12 @@
 <br><br>
 
 <script type="text/javascript">
+//getBbsListData(0);
 getBbsListCount();
 
 //검색?
 $("#btnSearch").click(function(){
+	//getBbsListData(0);
 	getBbsListCount();
 });
 
@@ -78,21 +81,29 @@ function getBbsListData(pNumber) {
 		success:function(list){//alert(list);
 			$(".list_col").remove();
 			$.each(list,function (i,val){
-				let app = "<tr class='list_col'>"
+				let app = ""
+				if(val.del == 1){
+					app = "<tr class='list_col'>"
+						+ "<td>" + (i+1) + "</td>"
+						+ "<td colspan='4' style='text-align:left; color:red'>* 이 글은 작성자에 의해서 삭제되었습니다. *</td>"
+						+ "</tr>";
+				}else{
+					app = "<tr class='list_col'>"
 						+ "<td>" + (i+1) + "</td>"
 						+ "<td style='text-align:left'>"
 			          	+ arrow(val.depth) //댓글이미지 자바스크립트로 만듦
 						+ "<a href='bbsdetail.do?seq="+val.seq+"'>"+val.title+"</a>"
 						+ "</td>"
+						+ "<td>"+val.readcount+"</td>"
 						+ "<td>"+val.id+"</td>"
 						+ "</tr>";
+				}
 				$("#_list_table").append(app);
 			});
 		},
 		error:function(){alert('error');}
 	});
 }
-
 //글의 총 수를 구하는 함수 필요
 function getBbsListCount() {
 	$.ajax({
@@ -106,7 +117,6 @@ function getBbsListCount() {
 		error:function(){ alert('error'); }
 	});
 }
-
 //페이지 처리를 하는 함수 필요
 function loadPage(totalCount) {
 	let pageSize = 10;
@@ -114,30 +124,32 @@ function loadPage(totalCount) {
 	
 	let _totalPages = totalCount / pageSize;
 	console.log("페이지수:"+_totalPages);
-
+	
 	if(totalCount % pageSize > 0){
+		//_totalPages = Math.ceil(_totalPages);
 		_totalPages++;
 	}
-	console.log("페이지수2:"+_totalPages);
+	
+	$("#pagination").twbsPagination("destroy"); //초기화
 	
 	$("#pagination").twbsPagination({
 	//	startPage: 1,
 		totalPages: _totalPages,
-		visiblePages:10,
+		visiblePages:5, //페이지번호를 몇개까지 보일건가
 		first:'<span sria-hidden="true">«</span>',
 		prev:"이전",
 		next:"다음",
 		last:'<span sria-hidden="true">»</span>',
-		initiateStartPageClick:true, //온 페이지 클릭이 자동실행되지 않도록 해줌
+		//initiateStartPageClick:false, //온 페이지 클릭이 자동실행여부 결정
 		onPageClick:function(event,page){
 			nowPage = page;
-		//	alert('nowPage : '+page);
+			//alert('nowPage : '+page);
 			getBbsListData(page-1);
 		}
 	});
-	$("#pagination").twbsPagination("changeTotalPages",_totalPages,nowPage);
+	
+	//$("#pagination").twbsPagination("changeTotalPages",_totalPages,nowPage);
 }
-
 //댓글 화살표 넣는 함수
 function arrow(depth) {
 	let rs = "<img src='./image/arrow.png' width='10px' height='10px'/>&nbsp;";
@@ -147,7 +159,6 @@ function arrow(depth) {
 	for(var i=0;i<depth;i++){ts+=nbsp;}
 	return depth==0?"":ts+rs;
 }
-
 </script>
 
 

@@ -10,15 +10,15 @@ public interface BbsDao {
 	List<BbsDto> getBbsList(BbsParam bbs);	
 	int getBbsCount(BbsParam bbs);
 	
-	//boolean writeBbs(BbsDto dto);
+	boolean writeBbs(BbsDto dto);
 	
-	//BbsDto getBbs(int seq);
-	//void readCount(int seq);
-	
-	//boolean replyBbsUpdate(BbsDto bbs);
-	//boolean replyBbsInsert(BbsDto bbs);
+	BbsDto getBbs(int seq);
+	void updateBbs(BbsDto bbs);
+	void deleteBbs(int seq);
+
+	boolean replyBbsUpdate(BbsDto bbs);
+	boolean replyBbsInsert(BbsDto bbs);
 		
-	//void deleteBbs(int seq);
+	void readCount(int seq);
 	
-	//void updateBbs(BbsDto bbs);
 }

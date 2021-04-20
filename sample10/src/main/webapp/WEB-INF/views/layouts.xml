@@ -12,6 +12,7 @@
 <definition name="regi.tiles" template="/WEB-INF/views/login/regi.jsp">
 </definition>
 
+
 <definition name="bbslist.tiles" template="/WEB-INF/views/layouts-tiles.jsp">
 	<put-attribute name="header" value="/WEB-INF/views/commons/header.jsp"/>
 	<put-attribute name="top_inc" value="/WEB-INF/views/commons/top_inc.jsp"/>
@@ -20,6 +21,30 @@
 	<put-attribute name="main" value="/WEB-INF/views/bbs/bbslist.jsp"/>
 	<put-attribute name="bottom_inc" value="/WEB-INF/views/commons/bottom_inc.jsp"/>
 </definition>
-	
+
+<definition name="bbswrite.tiles" extends="bbslist.tiles">
+	<put-attribute name="main" value="/WEB-INF/views/bbs/bbswrite.jsp"/>
+</definition>
+
+<definition name="bbsdetail.tiles" extends="bbslist.tiles">
+	<put-attribute name="main" value="/WEB-INF/views/bbs/bbsdetail.jsp"/>
+</definition>
+
+<definition name="bbsupdate.tiles" extends="bbslist.tiles">
+	<put-attribute name="main" value="/WEB-INF/views/bbs/bbsupdate.jsp"/>
+</definition>
+
+<definition name="bbsanswer.tiles" extends="bbslist.tiles">
+	<put-attribute name="main" value="/WEB-INF/views/bbs/bbsanswer.jsp"/>
+</definition>
+
+
+<definition name="calendarlist.tiles" extends="bbslist.tiles">
+	<put-attribute name="left_menu" value="/WEB-INF/views/calendar/left_calendarmenu.jsp"/>
+	<put-attribute name="main" value="/WEB-INF/views/calendar/calendarlist.jsp"/>
+</definition>
+
+
+
 </tiles-definitions>
 
