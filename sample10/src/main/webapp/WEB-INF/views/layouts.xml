@@ -45,6 +45,10 @@
 </definition>
 
 
+<definition name="calendarpulglist.tiles" extends="bbslist.tiles">
+	<put-attribute name="left_menu" value="/WEB-INF/views/calendar/left_calendarmenu.jsp"/>
+	<put-attribute name="main" value="/WEB-INF/views/calendarplug/calendarpluglist.jsp"/>
+</definition>
 
 </tiles-definitions>
 

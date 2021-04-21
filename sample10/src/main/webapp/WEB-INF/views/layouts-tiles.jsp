@@ -34,7 +34,7 @@
 			<div id="content_title_wrap">
 				<div class="title">${doc_title}</div>
 			</div>
-			
+
 			<tiles:insertAttribute name="main"/>
 			
 		</div>

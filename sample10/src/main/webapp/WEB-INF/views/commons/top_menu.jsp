@@ -9,7 +9,8 @@
 		<ul class="navi">
 			<li><a href="bbslist.do" title="답변형 게시판">Home</a></li>
 			<li><a href="bbslist.do" title="답변형 게시판">게시판</a></li>
-			<li><a href="calendarlist.do" title="답변형 게시판">일정관리</a></li>
+			<li><a href="calendarlist.do" title="일정관리">일정관리</a></li>
+			<li><a href="calendarpulglist.do" title="일정관리plug">일정관리plug</a></li>
 			
 			
 			
