@@ -42,7 +42,7 @@ public class CalendarServiceImpl implements CalendarService {
 		cal.set(Calendar.DATE, lastday);
 		int lastweek = cal.get(Calendar.DAY_OF_WEEK); //막요일
 		
-		CalendarParam cp = new CalendarParam(year, month, day, lastday, firstweek, lastweek);
+		CalendarParam cp = new CalendarParam(year, month, day, lastday, firstweek, lastweek,"","");
 		
 		return cp;
 	}
@@ -50,6 +50,21 @@ public class CalendarServiceImpl implements CalendarService {
 	@Override
 	public List<CalendarDto> getCalendarList(CalendarDto dto) {
 		return dao.getCalendarList(dto);
+	}
+
+	@Override
+	public CalendarDto getCalendar(CalendarDto dto) {
+		return dao.getCalendar(dto);
+	}
+
+	@Override
+	public void delCalendar(CalendarDto dto) {
+		dao.delCalendar(dto);
+	}
+
+	@Override
+	public void addCalendar(CalendarDto dto) {
+		dao.addCalendar(dto);
 	}
 
 

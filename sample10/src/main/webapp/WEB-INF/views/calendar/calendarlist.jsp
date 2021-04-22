@@ -4,11 +4,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<%-- <c:set var="now" value="<%=new java.util.Date()%>"/>
-<c:set var="nowYear"><fmt:formatDate value="${now}" pattern="yyyy"/></c:set> --%>
-
-<div class="box_border" style="margin-top: 5px; margin-bottom: 10px; display: none;">
-	<form action="" id="frmFormSearch" method="get">
+<div class="box_border" style="margin-top: 5px; margin-bottom: 10px; ">
+	<form action="addcalendar.do" id="frmFormSearch" method="get">
 		<table class="list_table" style="width: 85%;" id="_write_table">
 		  <colgroup>
 		  	<col style="width:70px">
@@ -19,22 +16,13 @@
     		<th style="background: #eee; color: #3e5fba;">제 목</th>
 			<td style="text-align:left">&nbsp;
 				<input type="text" name="title" size="100%" style="border: 1px solid #ddd">
+				<input type="hidden" name="id" value="${login.id}">
 			</td>
 		  </tr>
 		  
 		  <tr>
     		<th style="background: #eee; color: #3e5fba;">일 정</th>
-			<td style="text-align:left" class="schedule">&nbsp;
-				<select name="year">
-				</select>년
-				
-				<select name="month">
-				</select>월
-				
-				<select name="day">
-				</select>일
-				
-			</td>
+			<td style="text-align:left" class="schedule"></td>
 		  </tr>
 		  
 		  <tr>
@@ -46,8 +34,11 @@
 		  
 		  <tr>
 			 <td colspan="2">
-				 <span class="button blue large">
+				 <span class="button blue">
                  	<input type="submit" value="일정추가">
+				 </span>
+				 <span class="button blue ex">
+                 	<input type="button" value="창닫기">
 				 </span>
 			 </td>
 		  </tr>
@@ -70,13 +61,13 @@
   
   <tr>
     <td colspan="7" height="100px">
-    	<a href='#none' class=pp><img src='./image/left.gif' ></a>
-    	<a href='#none' class="p"><img src='./image/prec.gif'></a>
+    	<a href='#none' class="next"><img src='./image/left.gif' ></a>
+    	<a href='#none' class="next"><img src='./image/prec.gif'></a>
 	    <span style="font: 35px bold; margin: 0 10px;">
 	    <span id="year"></span>년 <span id="month"></span>월
 	    </span>
-    	<a href='#none' class="n"><img src='./image/next.gif'></a>
-    	<a href='#none' class="nn"><img src='./image/last.gif'></a>
+    	<a href='#none' class="next"><img src='./image/next.gif'></a>
+    	<a href='#none' class="next"><img src='./image/last.gif'></a>
 	</td>
   </tr>
   
@@ -88,6 +79,8 @@
 </table>
 
 <script type="text/javascript">
+$(".box_border").css("display","none");
+
 let y = $("#year").html();
 let m = $("#month").html();
 
@@ -96,40 +89,29 @@ if(m==""&&y==""){ //값 없을때 초기값
 	getCalendarData(y,m);
 }
 
-$(".box_border").focusout(function() {
-    $(".box_border").css("display","none");
-});
-/* $(".list_table").focusout(function() {
+/* $(".box_border").focusout(function() {
     $(".box_border").css("display","none");
 }); */
 
-$(".pp").on("click",function(){
-	y = $("#year").html()-1;
-	m = $("#month").html();
-	getCalendarData(y,m);
-});
-
-$(".p").on("click",function(){
+$(".next").on("click",function(){
 	y = $("#year").html();
-	m = $("#month").html()-1;
+	m = $("#month").html();
+	
+	let i = $(this).index();
+	switch(i){
+		case 0: y--; break;
+		case 1: m--; break;
+		case 3: m++; break;
+		case 4: y++; break;
+	}
+
 	if(m<1){m=12;y--;}
-	getCalendarData(y,m);
-});
-
-$(".n").on("click",function(){
-	y = $("#year").html();
-	m = $("#month").html();
-	m++;
 	if(m>12){m=1;y++;}
+	
 	getCalendarData(y,m);
 });
 
-$(".nn").on("click",function(){
-	y = $("#year").html();
-	m = $("#month").html();
-	y++;
-	getCalendarData(y,m);
-});
+
 
 function getCalendarData(yy,mm) {
 	$.ajax({
@@ -179,7 +161,8 @@ function getCalendarData(yy,mm) {
 }
 
 function callist(year,month,day) {
-	let str = "&nbsp;<a href='callist.do?year="+year+"&month="+month+"&day="+day+"'>"+day+"</a>";
+	let rdate = year+""+month+""+day
+	let str = "&nbsp;<a href='calendardaylist.do?id=${login.id}&rdate="+rdate+"'>"+day+"</a>";
 	return str;
 }
 
@@ -194,32 +177,66 @@ function showPen(year,month,day) {
 	return str;
 }
 
-function calendarwrite(yy,mm,dd) {
-	$(".box_border").css("display","block");
-	
-	$.ajax({
-		url:"./calendarData.do",
-		type:"get",
-		data:{year:yy,month:mm,day:dd},
-		success:function(cal){//alert(JSON.stringify(cal));
-			//$("._list_body").remove();
+$(".ex").on("click",function(){
+	$(".box_border").slideUp();
+});
 
-			let y = cal.year;
-			let app="<select name='year'>";
-			for(var i=y-5;i<=y+5;i++){
-				app += "<option";
-				console.log(i +","+ y);
-				if(i==y){
-					app += "selected='selected'";
-				}
-				app += ">"+i+"</option>";
-			}
-			app += "</select>년";
-			
-			$(".schedule").append(app);
-		},
-		error:function(){alert('error');}
-	});
+function calendarwrite(yy,mm,dd) {
+	$(".select_body").remove();
+	$(".box_border").slideDown();
+	//$(".box_border").css("display","block");
+	
+	let date = new Date(yy,mm,0);
+	let lastday = date.getDate();
+	//alert ( lastday + date );
+	
+	let app="<span class='select_body'>&nbsp;&nbsp;<select name='year' id='_year'>";
+	for(var i=yy-5;i<=yy+5;i++){
+		app += "<option ";
+		if(i==yy){ app += "selected='selected'"; }
+		app += ">"+i+"</option>";
+	}
+	app += "</select>년";
+	
+	app += "&nbsp;<select name='month' id='_month'>";
+	for(var i=1;i<=12;i++){
+		app += "<option ";
+		if(i==mm){ app += "selected='selected'"; }
+		var ii = i;
+		if(i<10){ii="0"+i;}
+		app += ">"+ii+"</option>";
+	}
+	app += "</select>월";
+	
+	app += "<select name='day'>";
+	for(var i=1;i<=lastday;i++){
+		app += "<option ";
+		if(i==dd){ app += "selected='selected'"; }
+		var ii = i;
+		if(i<10){ii="0"+i;}
+		app += ">"+ii+"</option>";
+	}
+	app += "</select>일</span>";
+	
+	app += "<select name='hour'>";
+	for(var i=0;i<=24;i++){
+		app += "<option ";
+		var ii = i;
+		if(i<10){ii="0"+i;}
+		app += ">"+ii+"</option>";
+	}
+	app += "</select>시</span>";
+	
+	app += "<select name='min'>";
+	for(var i=0;i<=60;i+=5){
+		app += "<option ";
+		var ii = i;
+		if(i<10){ii="0"+i;}
+		app += ">"+ii+"</option>";
+	}
+	app += "</select>분</span>";	
+	
+	$(".schedule").append(app);
 }
 
 function makeTable(yy,mm,dd) {
@@ -233,17 +250,17 @@ function makeTable(yy,mm,dd) {
 		success:function(list){//alert(JSON.stringify(list));
 			str = "<table style='margin:0;' border='1'> <col width='100'>";
 			str += "<div align='center'>";
-			str += "<ul><li>";
+			str += "<ul>";
 
 			$.each(list,function (i,val){
-				str += "<a href='caldetail.do?seq="+val.seq+"'>";
+				str += "<li><a href='calendardetail.do?seq="+val.seq+"'>";
 				str += "<font style='font-size:8px; color:black'>";
 				str += val.title;
 				str += "</font>";
-				str += "</a>";
+				str += "</a></li>";
 			});
 			
-			str += "</li></ul>";
+			str += "</ul>";
 			str += "</div>";
 			str += "</table>";
 		},

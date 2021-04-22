@@ -13,7 +13,19 @@
 	WHERE RNUM BETWEEN 1 AND 5
 </select>
 
+<update id="addCalendar" parameterType="bit.com.a.dto.CalendarDto">
+	INSERT INTO CALENDAR(SEQ,ID,TITLE,CONTENT,RDATE,WDATE)
+	VALUES(SEQ_CAL.NEXTVAL,#{id},#{title},#{content},#{rdate},SYSDATE)
+</update>
 
+<select id="getCalendar" parameterType="bit.com.a.dto.CalendarDto" resultType="bit.com.a.dto.CalendarDto">
+	SELECT SEQ, ID, TITLE, CONTENT, RDATE, WDATE
+	FROM CALENDAR WHERE SEQ=#{seq}
+</select>
+ 
+<delete id="delCalendar" parameterType="bit.com.a.dto.CalendarDto">
+	DELETE FROM CALENDAR WHERE SEQ=#{seq}
+</delete>
  
 </mapper>  
 

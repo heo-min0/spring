@@ -2,6 +2,8 @@ package bit.com.a.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,6 +47,46 @@ public class CalendarController {
 		System.out.println("리스트:"+list);
 		
 		return list;
+	}
+	
+	@RequestMapping(value = "addcalendar.do", method = RequestMethod.GET)
+	public String addcalendar(CalendarDto dto,String year,String month,String day,String hour,String min) {
+		String rdate = year+month+day+hour+min;
+		dto.setRdate(rdate);
+		calService.addCalendar(dto);
+		System.out.println(dto.toString());
+		
+		return "redirect:/calendarlist.do";
+	}
+	
+	@RequestMapping(value = "calendardaylist.do", method = RequestMethod.GET)
+	public String calendardaylist(CalendarDto dto,Model model) {
+		System.out.println(dto.toString());
+		
+		List<CalendarDto> list = calService.getCalendarList(dto);
+		model.addAttribute("daylist", list);
+		
+		return "calendardaylist.tiles";
+	}
+	
+	@RequestMapping(value = "calendardetail.do", method = RequestMethod.GET)
+	public String calendardetail(CalendarDto dto,Model model) {
+		System.out.println(dto.toString());
+		
+		CalendarDto cal = calService.getCalendar(dto);
+		System.out.println(cal.toString());
+		model.addAttribute("caldto", cal);
+		
+		return "calendardetail.tiles";
+	}
+	
+	@RequestMapping(value = "calendardel.do", method = RequestMethod.GET)
+	public String calendardel(CalendarDto dto) {
+		System.out.println(dto.toString());
+		
+		calService.delCalendar(dto);
+		
+		return "redirect:/calendarlist.do";
 	}
 	
 }

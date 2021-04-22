@@ -20,6 +20,21 @@ public class CalendarDaoImpl implements CalendarDao {
 	public List<CalendarDto> getCalendarList(CalendarDto dto) {
 		return session.selectList(ns+"getCalendarList",dto);
 	}
+
+	@Override
+	public CalendarDto getCalendar(CalendarDto dto) {
+		return session.selectOne(ns+"getCalendar",dto);
+	}
+
+	@Override
+	public void delCalendar(CalendarDto dto) {
+		session.delete(ns+"delCalendar",dto);
+	}
+
+	@Override
+	public void addCalendar(CalendarDto dto) {
+		session.update(ns+"addCalendar",dto);
+	}
 	
 	
 }

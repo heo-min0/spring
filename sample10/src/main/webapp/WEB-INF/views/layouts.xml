@@ -44,11 +44,39 @@
 	<put-attribute name="main" value="/WEB-INF/views/calendar/calendarlist.jsp"/>
 </definition>
 
+<definition name="calendardaylist.tiles" extends="bbslist.tiles">
+	<put-attribute name="main" value="/WEB-INF/views/calendar/calendardaylist.jsp"/>
+</definition>
 
+<definition name="calendardetail.tiles" extends="bbslist.tiles">
+	<put-attribute name="main" value="/WEB-INF/views/calendar/calendardetail.jsp"/>
+</definition>
+
+<!-- 일정관리 plug-in -->
 <definition name="calendarpulglist.tiles" extends="bbslist.tiles">
 	<put-attribute name="left_menu" value="/WEB-INF/views/calendar/left_calendarmenu.jsp"/>
 	<put-attribute name="main" value="/WEB-INF/views/calendarplug/calendarpluglist.jsp"/>
 </definition>
+
+<!-- 자료실 -->
+<definition name="pdslist.tiles" extends="bbslist.tiles">
+	<put-attribute name="left_menu" value="/WEB-INF/views/pds/left_pdsmenu.jsp"/>
+	<put-attribute name="main" value="/WEB-INF/views/pds/pdslist.jsp"/>
+</definition>
+
+<definition name="pdswrite.tiles" extends="bbslist.tiles">
+	<put-attribute name="left_menu" value="/WEB-INF/views/pds/left_pdsmenu.jsp"/>
+	<put-attribute name="main" value="/WEB-INF/views/pds/pdswrite.jsp"/>
+</definition>
+
+<definition name="pdsdetail.tiles" extends="bbslist.tiles">
+	<put-attribute name="left_menu" value="/WEB-INF/views/pds/left_pdsmenu.jsp"/>
+	<put-attribute name="main" value="/WEB-INF/views/pds/pdsdetail.jsp"/>
+</definition>
+
+
+
+
 
 </tiles-definitions>
 

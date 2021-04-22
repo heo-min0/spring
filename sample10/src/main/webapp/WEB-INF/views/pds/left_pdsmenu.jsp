@@ -3,13 +3,13 @@
 
 <div class="menu_table">
 	<ul style="width: 100%;">
-		<li class="title">일정관리</li>
-		<li class="subtitle">일정</li>
+		<li class="title">자료실 게시판</li>
+		<li class="subtitle">자료실</li>
 		<li class="menu_item">
-			<a href="calendarlist.do" title="일정목록">일정목록</a>
+			<a href="pdslist.do" title="자료목록">자료목록</a>
 		</li>
 		<li class="menu_item">
-			<a href="calendarlist.do" title="일정추가">일정추가</a>
+			<a href="pdswrite.do" title="자료올리기">자료올리기</a>
 		</li>
 		
 	</ul>
