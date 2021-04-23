@@ -89,4 +89,13 @@ public class CalendarController {
 		return "redirect:/calendarlist.do";
 	}
 	
+	@RequestMapping(value = "calendarupdate.do", method = RequestMethod.GET)
+	public String calendarupdate(CalendarDto dto) {
+		System.out.println(dto.toString());
+		
+		calService.updateCalendar(dto);
+		
+		return "redirect:/calendarlist.do";
+	}
+	
 }

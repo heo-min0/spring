@@ -169,16 +169,23 @@ function callist(year,month,day) {
 function showPen(year,month,day) {
 	let img = "<img src='image/pen.png' width='20px' height='20px' ";
 		img += "onclick='calendarwrite("+year+","+month+","+day+")'>";
-		
 	let str = "<a href='#none'>"+img+"</a>";
-		//"<a href='#none' class='calwrite'>"+img+"</a>";
-		/* "<a href='calwrite.do?year="+year
-			+ "&month="+month+"&day="+day+"'>"+img+"</a>"; */
 	return str;
 }
 
 $(".ex").on("click",function(){
 	$(".box_border").slideUp();
+});
+
+$(document).on('change','.sel',function(){
+	let sy = document.getElementById("_year");
+	let sm = document.getElementById("_month");
+	let sd = document.getElementById("_day");
+    let yy = Number( sy.options[sy.selectedIndex].value );
+    let mm = sm.options[sm.selectedIndex].value;
+    let dd = sd.options[sd.selectedIndex].value;
+    console.log(yy+mm+dd);
+	calendarwrite(yy,mm,dd);
 });
 
 function calendarwrite(yy,mm,dd) {
@@ -190,15 +197,17 @@ function calendarwrite(yy,mm,dd) {
 	let lastday = date.getDate();
 	//alert ( lastday + date );
 	
-	let app="<span class='select_body'>&nbsp;&nbsp;<select name='year' id='_year'>";
+	let app="<span class='select_body'>&nbsp;&nbsp;<select name='year' id='_year' class='sel'>";
+	console.log(yy+5);
 	for(var i=yy-5;i<=yy+5;i++){
 		app += "<option ";
 		if(i==yy){ app += "selected='selected'"; }
 		app += ">"+i+"</option>";
+		
 	}
 	app += "</select>년";
 	
-	app += "&nbsp;<select name='month' id='_month'>";
+	app += "&nbsp;<select name='month' id='_month' class='sel'>";
 	for(var i=1;i<=12;i++){
 		app += "<option ";
 		if(i==mm){ app += "selected='selected'"; }
@@ -208,7 +217,7 @@ function calendarwrite(yy,mm,dd) {
 	}
 	app += "</select>월";
 	
-	app += "<select name='day'>";
+	app += "&nbsp;<select name='day' id='_day'>";
 	for(var i=1;i<=lastday;i++){
 		app += "<option ";
 		if(i==dd){ app += "selected='selected'"; }
@@ -216,18 +225,18 @@ function calendarwrite(yy,mm,dd) {
 		if(i<10){ii="0"+i;}
 		app += ">"+ii+"</option>";
 	}
-	app += "</select>일</span>";
+	app += "</select>일";
 	
-	app += "<select name='hour'>";
+	app += "&nbsp;<select name='hour'>";
 	for(var i=0;i<=24;i++){
 		app += "<option ";
 		var ii = i;
 		if(i<10){ii="0"+i;}
 		app += ">"+ii+"</option>";
 	}
-	app += "</select>시</span>";
+	app += "</select>시";
 	
-	app += "<select name='min'>";
+	app += "&nbsp;<select name='min'>";
 	for(var i=0;i<=60;i+=5){
 		app += "<option ";
 		var ii = i;
@@ -268,6 +277,7 @@ function makeTable(yy,mm,dd) {
 	});
 	return str;
 }
+
 
 </script>
 

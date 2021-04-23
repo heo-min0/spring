@@ -29,4 +29,14 @@ public class PdsServiceImpl implements PdsService {
 	public PdsDto getPds(int seq) {
 		return dao.getPds(seq);
 	}
+
+	@Override
+	public int delPds(int seq) {
+		return dao.delPds(seq);
+	}
+
+	@Override
+	public int updatePds(PdsDto dto) {
+		return dao.updatePds(dto);
+	}
 }

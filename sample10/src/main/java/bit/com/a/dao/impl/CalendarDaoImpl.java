@@ -35,6 +35,11 @@ public class CalendarDaoImpl implements CalendarDao {
 	public void addCalendar(CalendarDto dto) {
 		session.update(ns+"addCalendar",dto);
 	}
+
+	@Override
+	public void updateCalendar(CalendarDto dto) {
+		session.update(ns+"updateCalendar",dto);
+	}
 	
 	
 }

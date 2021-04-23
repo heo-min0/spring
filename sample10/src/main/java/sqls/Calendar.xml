@@ -27,6 +27,12 @@
 	DELETE FROM CALENDAR WHERE SEQ=#{seq}
 </delete>
  
+<update id="updateCalendar" parameterType="bit.com.a.dto.CalendarDto">
+	UPDATE CALENDAR SET TITLE=#{title}, CONTENT=#{content}, RDATE=#{rdate}, WDATE=SYSDATE
+	WHERE SEQ=#{seq}
+</update>
+
+
 </mapper>  
 
 

@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!-- <!DOCTYPE html> -->
 
 <table class="list_table" style="width: 85%">
 	<colgroup>
@@ -55,12 +54,13 @@
 
 
 <script type="text/javascript">
+let doc = document.file_Down;
+console.log(doc);
 
 $(".btn_fileDelete").on("click",function(){
-	let a = $(this).attr("data_file_seq");
-	alert(a);
+	let seq = $(this).attr("data_file_seq");
+	location.href="pdsdel.do?seq="+seq;
 });
-
 
 
 $("#_btnAdd").click(function(){
@@ -75,7 +75,6 @@ function filedown(newfilename,seq) {
 }
 
 </script>
-
 
 
 

@@ -10,4 +10,6 @@ public interface PdsService {
 	
 	boolean uploadPds(PdsDto dto);
 	PdsDto getPds(int seq);
+	int delPds(int seq);
+	int updatePds(PdsDto dto);
 }

@@ -32,6 +32,16 @@ public class PdsDaoImpl implements PdsDao {
 	public PdsDto getPds(int seq) {
 		return session.selectOne(ns+"getPds",seq);
 	}
+
+	@Override
+	public int delPds(int seq) {
+		return session.update(ns+"delPds",seq);
+	}
+
+	@Override
+	public int updatePds(PdsDto dto) {
+		return session.update(ns+"updatePds",dto);
+	}
 	
 	
 }

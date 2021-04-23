@@ -67,6 +67,9 @@ public class CalendarServiceImpl implements CalendarService {
 		dao.addCalendar(dto);
 	}
 
-
+	@Override
+	public void updateCalendar(CalendarDto dto) {
+		dao.updateCalendar(dto);
+	}
 
 }

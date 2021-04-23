@@ -45,10 +45,12 @@
 </definition>
 
 <definition name="calendardaylist.tiles" extends="bbslist.tiles">
+	<put-attribute name="left_menu" value="/WEB-INF/views/calendar/left_calendarmenu.jsp"/>
 	<put-attribute name="main" value="/WEB-INF/views/calendar/calendardaylist.jsp"/>
 </definition>
 
 <definition name="calendardetail.tiles" extends="bbslist.tiles">
+	<put-attribute name="left_menu" value="/WEB-INF/views/calendar/left_calendarmenu.jsp"/>
 	<put-attribute name="main" value="/WEB-INF/views/calendar/calendardetail.jsp"/>
 </definition>
 
@@ -74,7 +76,10 @@
 	<put-attribute name="main" value="/WEB-INF/views/pds/pdsdetail.jsp"/>
 </definition>
 
-
+<definition name="pdsupdate.tiles" extends="bbslist.tiles">
+	<put-attribute name="left_menu" value="/WEB-INF/views/pds/left_pdsmenu.jsp"/>
+	<put-attribute name="main" value="/WEB-INF/views/pds/pdsupdate.jsp"/>
+</definition>
 
 
 

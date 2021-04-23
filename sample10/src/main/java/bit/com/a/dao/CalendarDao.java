@@ -10,4 +10,5 @@ public interface CalendarDao {
 	CalendarDto getCalendar(CalendarDto dto);
 	void addCalendar(CalendarDto dto);
 	void delCalendar(CalendarDto dto);
+	void updateCalendar(CalendarDto dto);
 }

@@ -13,8 +13,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import bit.com.a.dto.BbsParam;
 import bit.com.a.dto.PdsDto;
 import bit.com.a.service.PdsService;
 import bit.com.a.util.PdsUtil;
@@ -44,18 +46,37 @@ public class PdsController {
 	
 	@RequestMapping(value = "pdsdetail.do", method = {RequestMethod.GET,RequestMethod.POST})
 	public String pdsdetail(int seq,Model model) {
-		
+		System.out.println("pdsdetail "+seq);
 		PdsDto dto = service.getPds(seq);
 		model.addAttribute("pdsdto", dto);
 		
 		return "pdsdetail.tiles";
 	}
 	
+	@RequestMapping(value = "pdsupdate.do", method = {RequestMethod.GET,RequestMethod.POST})
+	public String pdsupdate(int seq,Model model) {
+		System.out.println("pdsupdate "+seq);
+		
+		PdsDto dto = service.getPds(seq);
+		model.addAttribute("pdsdto", dto);
+		
+		return "pdsupdate.tiles";
+	}
+	
+	
 	@RequestMapping(value = "pdsupload.do", method = {RequestMethod.GET,RequestMethod.POST})
 	public String pdsupload(PdsDto pdsdto, 
 							@RequestParam(value = "fileload", required = false)
 							MultipartFile fileload,
 							HttpServletRequest req) {
+		
+		System.out.println(pdsdto.toString());
+		
+		if(fileload.getSize()<=0) {
+			System.out.println("비었다"+pdsdto.toString());
+			service.updatePds(pdsdto);
+			return "redirect:/pdslist.do";
+		}
 		
 		//filename 취득
 		String filename = fileload.getOriginalFilename();
@@ -79,8 +100,11 @@ public class PdsController {
 			//실제로 업로드 되는 부분
 			FileUtils.writeByteArrayToFile(file, fileload.getBytes());
 			
-			//db 저장
-			service.uploadPds(pdsdto);
+			if(pdsdto.getSeq()==0) {
+				service.uploadPds(pdsdto); //db 저장
+			}else {
+				service.updatePds(pdsdto);
+			}
 			
 		}
 		catch (IOException e) {e.printStackTrace();}
@@ -107,7 +131,14 @@ public class PdsController {
 		return "downloadView";
 	}
 	
-	
+	@RequestMapping(value = "pdsdel.do", method = RequestMethod.GET)
+	public String pdsdel(int seq) {
+		System.out.println("pds 지우는" + seq);
+		
+		service.delPds(seq);
+		
+		return "redirect:/pdslist.do";
+	}
 	
 	
 }
