@@ -12,6 +12,7 @@
 			<li><a href="calendarlist.do" title="일정관리">일정관리</a></li>
 			<li><a href="calendarpulglist.do" title="일정관리plug">일정관리plug</a></li>
 			<li><a href="pdslist.do" title="자료실">자료실</a></li>
+			<li><a href="polllist.do" title="투표">투표</a></li>
 			
 			
 			

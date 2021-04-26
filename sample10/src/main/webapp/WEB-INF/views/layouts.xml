@@ -82,6 +82,22 @@
 </definition>
 
 
+<!-- 투표 -->
+<definition name="polllist.tiles" extends="bbslist.tiles">
+	<put-attribute name="left_menu" value="/WEB-INF/views/poll/left_pollmenu.jsp"/>
+	<put-attribute name="main" value="/WEB-INF/views/poll/polllist.jsp"/>
+</definition>
+
+<definition name="pollmake.tiles" extends="polllist.tiles">
+	<put-attribute name="main" value="/WEB-INF/views/poll/pollmake.jsp"/>
+</definition>
+
+<definition name="polldetail.tiles" extends="polllist.tiles">
+	<put-attribute name="main" value="/WEB-INF/views/poll/polldetail.jsp"/>
+</definition>
+
+
+
 
 </tiles-definitions>
 
