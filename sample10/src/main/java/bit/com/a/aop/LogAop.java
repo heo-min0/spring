@@ -2,9 +2,16 @@ package bit.com.a.aop;
 
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import bit.com.a.dto.MemberDto;
 
 @Aspect
 public class LogAop {
@@ -14,7 +21,21 @@ public class LogAop {
 		
 		String signatureStr = joinpoint.getSignature().toShortString();
 		
-		System.out.println(signatureStr + "시작");
+		//session check 하여 비어있으면 로그인 하면으로
+		HttpServletRequest request
+		 = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest(); //모든 어튜리뷰트 다꺼냄
+		
+		if(request != null) {
+			HttpSession session = request.getSession();
+			MemberDto login = (MemberDto)session.getAttribute("login");
+			
+			if(login == null) {
+				return "redirect:/sessionOut.do";
+			}
+		}
+		
+		
+		//System.out.println(signatureStr + "시작");
 		
 		try {
 			Object obj = joinpoint.proceed();	// 실행시

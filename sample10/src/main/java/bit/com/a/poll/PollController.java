@@ -22,7 +22,10 @@ public class PollController {
 	public String polllist(Model model, HttpServletRequest req) {
 		model.addAttribute("doc_title", "투표목록");
 		
-		String id = ((MemberDto)req.getSession().getAttribute("login")).getId();
+		String id = "";
+		if(req.getSession().getAttribute("login") != null) {
+			id = ((MemberDto)req.getSession().getAttribute("login")).getId();
+		}
 		
 		List<PollDto> list = service.getPollAllList(id);
 		model.addAttribute("plists",list);
@@ -62,4 +65,28 @@ public class PollController {
 		return "redirect:/polllist.do";
 	}
 	
+	@RequestMapping(value = "pollresult.do", method = {RequestMethod.GET,RequestMethod.POST})
+	public String pollresult(PollDto poll,Model model) {
+		model.addAttribute("doc_title", "투표결과");
+		
+		//polltotal
+		PollDto dto = service.getPoll(poll);
+		//보기들(acount)
+		List<PollSubDto> list = service.getPollSubList(poll);
+		
+		model.addAttribute("poll", dto);
+		model.addAttribute("pollsublist", list);
+		
+		return "pollresult.tiles";
+	}
+	
 }
+
+
+
+
+
+
+
+
+

@@ -76,7 +76,7 @@
     
     <td> <!-- 결과확인 -->
     <% if(isS == true || PollUtil.isEnd(poll.getEdate()) == true){ %>
-    	<a href="pollresult.do?pollid=<%=poll.getId()%>">결과</a>
+    	<a href="pollresult.do?pollid=<%=poll.getPollid()%>">결과</a>
     <% }else{ %>
     	<img alt="" src="image/pen.gif">
     <% } %>

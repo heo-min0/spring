@@ -1,4 +1,4 @@
-package bit.com.a.controller;
+package bit.com.a.member;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -60,11 +60,11 @@ public class MemberController {
 		if(mem != null && !mem.getId().equals("")) {
 			req.getSession().setAttribute("login", mem);
 			req.getSession().setMaxInactiveInterval(60*60*24); //로그인 섹션 시간 주기
+		//	req.getSession().setMaxInactiveInterval(5);
 			System.out.println("2번째:"+mem.toString());
 			return "redirect:/bbslist.do";
 		}
 		else {return "redirect:/login.do";}
-		
 	}
 	
 	@RequestMapping(value = "logout.do", method = RequestMethod.GET)
@@ -72,5 +72,11 @@ public class MemberController {
 		req.getSession().removeAttribute("login");
 		return "login.tiles";
 	}
+	
+	@RequestMapping(value = "sessionOut.do", method = RequestMethod.GET)
+	public String sessionOut() {
+		return "sessionOut.tiles";
+	}
+	
 	
 }

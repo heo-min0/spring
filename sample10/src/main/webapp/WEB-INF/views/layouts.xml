@@ -12,6 +12,9 @@
 <definition name="regi.tiles" template="/WEB-INF/views/login/regi.jsp">
 </definition>
 
+<definition name="sessionOut.tiles" extends="bbslist.tiles">
+	<put-attribute name="main" value="/WEB-INF/views/login/sessionOut.jsp"/>
+</definition>
 
 <definition name="bbslist.tiles" template="/WEB-INF/views/layouts-tiles.jsp">
 	<put-attribute name="header" value="/WEB-INF/views/commons/header.jsp"/>
@@ -96,6 +99,15 @@
 	<put-attribute name="main" value="/WEB-INF/views/poll/polldetail.jsp"/>
 </definition>
 
+<definition name="pollresult.tiles" extends="polllist.tiles">
+	<put-attribute name="main" value="/WEB-INF/views/poll/pollresult.jsp"/>
+</definition>
+
+
+<!-- web socket -->
+<definition name="chating.tiles" extends="bbslist.tiles">
+	<put-attribute name="main" value="/WEB-INF/views/websocket/chating.jsp"/>
+</definition>
 
 
 
