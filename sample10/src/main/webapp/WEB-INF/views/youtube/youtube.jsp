@@ -16,7 +16,22 @@ $(function() {
 	//alert(json);
 	$("#demo").val(json);
 	
-	let obj = json.contents.twoColumnSearchResultsRenderer.primaryContents.sectionListRenderer.contents[0].itemSectionRenderer.contents[1].shelfRenderer.content.verticalListRenderer.items;
+	let obj = json.contents.twoColumnSearchResultsRenderer.primaryContents.sectionListRenderer.contents[0].itemSectionRenderer.contents;
+    $.each(obj, function (i, item) {
+      if(item.videoRenderer != undefined){
+         let s = "<tr>"
+         + "<td>" + (i + 1) + "</td>"
+         + "<td style='text-align: left;'><div class='c_vname' vname='" + item.videoRenderer.videoId + "'>" + item.videoRenderer.title.runs[0].text + "</div></td>"
+         + "<td>" + item.videoRenderer.videoId + "</td>"
+         + "<td><img src='image/save.png' class='ck_seq' id='" + item.videoRenderer.videoId + "'   loginIn='${login.id}' title='" + item.videoRenderer.title.runs[0].text + "'></td>"
+         + "</tr>";
+      
+         $("#tbody").append(s);
+      }
+    });
+	
+	
+	obj = json.contents.twoColumnSearchResultsRenderer.primaryContents.sectionListRenderer.contents[0].itemSectionRenderer.contents[1].shelfRenderer.content.verticalListRenderer.items;
 	$.each(obj, function (i,item) {
 		//console.log(item.videoRenderer.videoId);
 		//console.log(item.videoRenderer.title.runs[0].text);
@@ -34,26 +49,9 @@ $(function() {
 		$("#tbody").append(s);
 	});
 	
-	obj = json.contents.twoColumnSearchResultsRenderer.primaryContents.sectionListRenderer.contents[0].itemSectionRenderer.contents;
-    $.each(obj, function (i, item) {
-      if(item.videoRenderer != undefined){
-         let s = "<tr>"
-         + "<td>" + (i + 1) + "</td>"
-         + "<td style='text-align: left;'><div class='c_vname' vname='" + item.videoRenderer.videoId + "'>" + item.videoRenderer.title.runs[0].text + "</div></td>"
-         + "<td>" + item.videoRenderer.videoId + "</td>"
-         + "<td><img src='image/save.png' class='ck_seq' id='" + item.videoRenderer.videoId + "'   loginIn='${login.id}' title='" + item.videoRenderer.title.runs[0].text + "'></td>"
-         + "</tr>";
-      
-         $("#tbody").append(s);
-      }
-    });
+
 	
-	obj = json.contents.twoColumnSearchResultsRenderer.primaryContents.sectionListRenderer.contents[0].itemSectionRenderer.contents;
-	$.each(obj, function (i,item) {
-		//console.log(item.videoRenderer.videoId);
-		//console.log(item.videoRenderer.title.runs[0].text);
-		
-	});
+
 		
 	
 });

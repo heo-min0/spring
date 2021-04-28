@@ -43,7 +43,7 @@ public class YoutubeParser {
 			//끝위치
 			int endpos = text.indexOf("};", pos);
 			
-			str = text.substring(pos-1, endpos+1); // 제이손 형태로 만들었지만 결국은 스트링
+			str = text.substring(pos-1, endpos+1); // 제이슨 형태로 만들었지만 결국은 스트링
 			//System.out.println(str);
 			
 			str = str.replace("\"", "\\\""); //    "  ->  \"

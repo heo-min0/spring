@@ -43,8 +43,7 @@ public class YoutubeController {
 	@ResponseBody
 	@RequestMapping(value = "youtubesave.do", method = {RequestMethod.GET, RequestMethod.POST})
 	public String youtubesave(YoutubeDto you) {
-		//System.out.println(you.toString());
-		//System.out.println("id : "+id);
+		System.out.println(you.toString());
 		
 		//똑같은 데이타가 있는지 조사
 		
