@@ -41,7 +41,9 @@ public class WebSocket extends TextWebSocketHandler {
 		System.out.println("메시지 수신:"+ session+" "+ new Date());
 		System.out.println("메시지 수신:"+ session.getId()+" "+ new Date());
 
-		
+		if (userMap.size() < 2) {
+			
+		}
 		//송신 send - 모든 client에 전송
 		for (WebSocketSession s : userMap.values()) {
 			System.out.println(s);
