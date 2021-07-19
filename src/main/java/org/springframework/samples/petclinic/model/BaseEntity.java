@@ -29,11 +29,11 @@ import javax.persistence.MappedSuperclass;
  * @author Ken Krebs
  * @author Juergen Hoeller
  */
-@MappedSuperclass
+//@MappedSuperclass
 public class BaseEntity implements Serializable {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	public Integer getId() {
