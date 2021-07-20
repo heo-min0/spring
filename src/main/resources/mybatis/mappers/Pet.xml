@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.springframework.samples.petclinic.owner.PetRepository">
+
+    <select id="findPetTypes" resultType="org.springframework.samples.petclinic.owner.PetType">
+        SELECT ptype
+        FROM PetType ptype
+        ORDER BY ptype.name
+    </select>
+
+    <select id="findById" parameterType="int" resultType="org.springframework.samples.petclinic.owner.Pet">
+        SELECT id,
+               name,
+               birth_date,
+               type_id,
+               owner_id
+        FROM pets
+        WHERE id = #{id}
+    </select>
+
+    <insert id="save" parameterType="org.springframework.samples.petclinic.owner.Pet">
+        INSERT INTO pets (
+            id, name, birth_date, type_id, owner_id
+        ) VALUES (
+            #{id},
+            #{name},
+            #{birth_date},
+            #{type_id},
+            #{owner_id}
+        )
+        ON DUPLICATE KEY UPDATE
+            name=#{name},
+            last_name=#{birth_date},
+            type_id=#{type_id},
+            owner_id=#{owner_id};
+    </insert>
+
+</mapper>

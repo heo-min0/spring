@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.springframework.samples.petclinic.owner.OwnerRepository">
+
+	<select id="findByLastName" parameterType="string" resultType="org.springframework.samples.petclinic.owner.Owner">
+        SELECT DISTINCT owner
+        FROM Owner owner left join fetch owner.pets
+        WHERE owner.lastName LIKE #{lastName}+'%'
+	</select>
+
+    <select id="findById" parameterType="int" resultType="org.springframework.samples.petclinic.owner.Owner">
+        SELECT owner
+        FROM Owner owner left join fetch owner.pets
+        WHERE owner.id = #{id}
+    </select>
+
+    <insert id="save" parameterType="org.springframework.samples.petclinic.owner.Owner">
+        INSERT INTO owners (
+            id, first_name, last_name, address, city, telephone
+        ) VALUES (
+            #{id},
+            #{firstName},
+            #{lastName},
+            #{address},
+            #{city},
+            #{telephone}
+        )
+        ON DUPLICATE KEY UPDATE
+            first_name=#{firstName},
+            last_name=#{lastName},
+            address=#{address},
+            city=#{city},
+            telephone=#{telephone};
+    </insert>
+
+</mapper>

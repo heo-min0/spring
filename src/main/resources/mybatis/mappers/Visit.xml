@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.springframework.samples.petclinic.visit.VisitRepository">
+
+  <select id="findByPetId" parameterType="integer" resultType="org.springframework.samples.petclinic.visit.Visit">
+    SELECT
+      id, pet_id, visit_date, description
+    FROM visits
+    WHERE id = #{id}
+  </select>
+
+    <insert id="save" parameterType="org.springframework.samples.petclinic.visit.Visit">
+        INSERT INTO visits (
+            id, pet_id, visit_date, description
+        ) VALUES (
+            #{id},
+            #{pet_id},
+            #{visit_date},
+            #{description}
+        )
+        ON DUPLICATE KEY UPDATE
+            pet_id=#{pet_id},
+            visit_date=#{visit_date},
+            description=#{description};
+    </insert>
+
+</mapper>
