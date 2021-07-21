@@ -59,4 +59,6 @@ public interface OwnerRepository {
 	 */
 	void save(Owner owner);
 
+    void update(Owner owner);
+
 }

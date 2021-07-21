@@ -121,7 +121,7 @@ class OwnerController {
 		}
 		else {
 			owner.setId(ownerId);
-			this.owners.save(owner);
+			this.owners.update(owner);
 			return "redirect:/owners/{ownerId}";
 		}
 	}

@@ -3,35 +3,52 @@
 
 <mapper namespace="org.springframework.samples.petclinic.owner.OwnerRepository">
 
-	<select id="findByLastName" parameterType="string" resultType="org.springframework.samples.petclinic.owner.Owner">
-        SELECT DISTINCT owner
-        FROM Owner owner left join fetch owner.pets
-        WHERE owner.lastName LIKE #{lastName}+'%'
+    <select id="findByLastName" parameterType="string" resultType="org.springframework.samples.petclinic.owner.Owner">
+        SELECT DISTINCT
+            owner.id,
+            owner.first_name as firstName,
+            owner.last_name as lastName,
+            owner.address,
+            owner.city,
+            owner.telephone
+        FROM Owners owner left join pets on owner.id = pets.owner_id
+        WHERE owner.last_name LIKE #{lastName} || '%'
 	</select>
 
     <select id="findById" parameterType="int" resultType="org.springframework.samples.petclinic.owner.Owner">
-        SELECT owner
-        FROM Owner owner left join fetch owner.pets
+        SELECT
+            owner.id,
+            owner.first_name as firstName,
+            owner.last_name as lastName,
+            owner.address,
+            owner.city,
+            owner.telephone
+        FROM Owners owner left join pets on owner.id = pets.owner_id
         WHERE owner.id = #{id}
     </select>
 
-    <insert id="save" parameterType="org.springframework.samples.petclinic.owner.Owner">
+    <insert id="save" parameterType="org.springframework.samples.petclinic.owner.Owner" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO owners (
-            id, first_name, last_name, address, city, telephone
+            first_name, last_name, address, city, telephone
         ) VALUES (
-            #{id},
             #{firstName},
             #{lastName},
             #{address},
             #{city},
             #{telephone}
         )
-        ON DUPLICATE KEY UPDATE
-            first_name=#{firstName},
-            last_name=#{lastName},
-            address=#{address},
-            city=#{city},
-            telephone=#{telephone};
     </insert>
+
+    <update id="update" parameterType="org.springframework.samples.petclinic.owner.Owner">
+        UPDATE owners
+        SET
+            first_name = #{firstName}
+          , last_name = #{lastName}
+          , address = #{address}
+          , city = #{city}
+          , telephone = #{telephone}
+        WHERE
+            id = #{id}
+    </update>
 
 </mapper>

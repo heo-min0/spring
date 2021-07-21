@@ -4,17 +4,17 @@
 <mapper namespace="org.springframework.samples.petclinic.owner.PetRepository">
 
     <select id="findPetTypes" resultType="org.springframework.samples.petclinic.owner.PetType">
-        SELECT ptype
-        FROM PetType ptype
-        ORDER BY ptype.name
+        SELECT id, name
+        FROM types
+        ORDER BY name
     </select>
 
     <select id="findById" parameterType="int" resultType="org.springframework.samples.petclinic.owner.Pet">
         SELECT id,
                name,
-               birth_date,
-               type_id,
-               owner_id
+               birth_date as birthDate,
+               type_id as type,
+               owner_id as owner
         FROM pets
         WHERE id = #{id}
     </select>
