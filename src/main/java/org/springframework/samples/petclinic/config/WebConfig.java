@@ -1,58 +1,59 @@
 package org.springframework.samples.petclinic.config;
 
-import javax.sql.DataSource;
-
-import org.mybatis.spring.SqlSessionFactoryBean;
-import org.mybatis.spring.SqlSessionTemplate;
-import org.mybatis.spring.mapper.MapperScannerConfigurer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
+import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.spring5.ISpringTemplateEngine;
+import org.thymeleaf.spring5.SpringTemplateEngine;
+import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
+import org.thymeleaf.spring5.view.ThymeleafViewResolver;
+import org.thymeleaf.templatemode.TemplateMode;
 
 @Configuration
 @EnableWebMvc
 @PropertySource("classpath:/application.properties")
-public class WebConfig {
+public class WebConfig implements WebMvcConfigurer {
 
-    @Bean
-    public DataSource dataSource() {
-        EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
-        return builder.setType(EmbeddedDatabaseType.H2)
-            .addScript("classpath:db/h2/schema.sql")
-            .addScript("classpath:db/h2/data.sql")
-            .build();
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry
+            .addResourceHandler("/resources/**")
+            .addResourceLocations("/resources/");
+
+        registry
+            .addResourceHandler("/webjars/**")
+            .addResourceLocations("/webjars/")
+            .resourceChain(false);
     }
 
     @Bean
-    public SqlSessionFactoryBean sqlSessionFactoryMt (DataSource dataSource, ApplicationContext ctx) throws Exception {
-        SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
-        sessionFactory.setDataSource(dataSource);
-        sessionFactory.setConfigLocation(ctx.getResource("classpath:/mybatis/sqlSession-config.xml"));
-        sessionFactory.setMapperLocations(ctx.getResources("classpath:/mybatis/mappers/*.xml"));
+    public ViewResolver viewResolver (TemplateEngine templateEngine) {
+        ThymeleafViewResolver resolver = new ThymeleafViewResolver();
+        resolver.setTemplateEngine((ISpringTemplateEngine) templateEngine);
+        resolver.setCharacterEncoding("UTF-8");
 
-        return sessionFactory;
+        return resolver;
     }
 
     @Bean
-    public SqlSessionTemplate sqlTemplate(SqlSessionFactoryBean sqlSession) throws Exception {
-        return new SqlSessionTemplate(sqlSession.getObject());
+    public TemplateEngine templateEngine (ApplicationContext ctx) {
+        SpringResourceTemplateResolver resolver = new SpringResourceTemplateResolver();
+        resolver.setApplicationContext(ctx);
+        resolver.setPrefix("/WEB-INF/views/");
+        resolver.setSuffix(".html");
+        resolver.setTemplateMode(TemplateMode.HTML);
+
+        SpringTemplateEngine engine = new SpringTemplateEngine();
+        engine.setEnableSpringELCompiler(true);
+        engine.setTemplateResolver(resolver);
+
+        return engine;
     }
 
-    @Bean
-    public MapperScannerConfigurer mapperScanner() {
-        MapperScannerConfigurer scanner = new MapperScannerConfigurer();
-        scanner.setBasePackage("org.springframework.samples.petclinic");
-
-        return scanner;
-    }
-
-    @Bean
-    public DataSourceTransactionManager transactionManagerDasMt (DataSource dataSource) throws Exception {
-        return new DataSourceTransactionManager(dataSource);
-    }
 }
