@@ -29,6 +29,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotEmpty;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PropertyComparator;
 import org.springframework.core.style.ToStringCreator;
@@ -46,6 +47,10 @@ import org.springframework.samples.petclinic.model.Person;
 //@Table(name = "owners")
 public class Owner extends Person {
 
+    private int offset;
+    private int limit;
+    private int totalCount;
+
 //	@Column(name = "address")
 	@NotEmpty
 	private String address;
@@ -62,7 +67,31 @@ public class Owner extends Person {
 //	@OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
 	private Set<Pet> pets;
 
-	public String getAddress() {
+    public int getOffset() {
+        return offset;
+    }
+
+    public void setOffset(int offset) {
+        this.offset = offset;
+    }
+
+    public int getLimit() {
+        return limit == 0 ? 5 : limit;
+    }
+
+    public void setLimit(int limit) {
+        this.limit = limit;
+    }
+
+    public int getTotalCount() {
+        return totalCount;
+    }
+
+    public void setTotalCount(int totalCount) {
+        this.totalCount = totalCount;
+    }
+
+    public String getAddress() {
 		return this.address;
 	}
 
@@ -138,13 +167,27 @@ public class Owner extends Person {
 		return null;
 	}
 
-	@Override
-	public String toString() {
-		return new ToStringCreator(this)
+//	@Override
+//	public String toString() {
+//		return new ToStringCreator(this)
+//
+//				.append("id", this.getId()).append("new", this.isNew()).append("lastName", this.getLastName())
+//				.append("firstName", this.getFirstName()).append("address", this.address).append("city", this.city)
+//				.append("telephone", this.telephone).append("totalcount", this.totalCount).toString();
+//	}
 
-				.append("id", this.getId()).append("new", this.isNew()).append("lastName", this.getLastName())
-				.append("firstName", this.getFirstName()).append("address", this.address).append("city", this.city)
-				.append("telephone", this.telephone).toString();
-	}
-
+    @Override
+    public String toString() {
+        return "Owner{" +
+            "offset=" + offset +
+            ", limit=" + limit +
+            ", totalCount=" + totalCount +
+            ", address='" + address + '\'' +
+            ", city='" + city + '\'' +
+            ", telephone='" + telephone + '\'' +
+            ", pets=" + pets +
+            ", lastName=" + this.getLastName() +
+            ", firstName=" + this.getFirstName() +
+            '}';
+    }
 }

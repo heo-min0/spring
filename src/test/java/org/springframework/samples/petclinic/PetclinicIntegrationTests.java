@@ -20,16 +20,38 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.vet.VetRepository;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+
 //@SpringBootTest
 class PetclinicIntegrationTests {
 
 	@Autowired
 	private VetRepository vets;
 
-	@Test
-	void testFindAll() throws Exception {
-		vets.findAll();
-		vets.findAll(); // served from cache
-	}
+//	@Test
+//	void testFindAll() throws Exception {
+//		vets.findAll();
+//		vets.findAll(); // served from cache
+//	}
+
+//    static {
+//        try {
+//            Class.forName("oracle.jdbc.driver.OracleDriver");
+//        } catch(Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    @Test
+//    public void testConnection() {
+//        try(Connection con = DriverManager.getConnection("jdbc:oracle:thin:@nexgrid2.iptime.org:21521:ORCL",
+//            "COMMUTE_DEV",
+//            "grid#14ghdeo")){
+//            System.out.println("conn");
+//        } catch(Exception e) {
+//            System.out.println(e.getMessage());
+//        }
+//    }
 
 }

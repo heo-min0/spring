@@ -53,7 +53,7 @@ class VetControllerTests {
 		radiology.setId(1);
 		radiology.setName("radiology");
 		helen.addSpecialty(radiology);
-		given(this.vets.findAll()).willReturn(Lists.newArrayList(james, helen));
+//		given(this.vets.findAll()).willReturn(Lists.newArrayList(james, helen));
 	}
 
 	@Test

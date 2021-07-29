@@ -4,27 +4,42 @@
 <mapper namespace="org.springframework.samples.petclinic.owner.OwnerRepository">
 
     <select id="findByLastName" parameterType="string" resultType="org.springframework.samples.petclinic.owner.Owner">
+<!--        SELECT DISTINCT-->
+<!--            owner.id,-->
+<!--            owner.first_name as firstName,-->
+<!--            owner.last_name as lastName,-->
+<!--            owner.address,-->
+<!--            owner.city,-->
+<!--            owner.telephone-->
+<!--        FROM Owners owner left join pets on owner.id = pets.owner_id-->
+<!--        WHERE owner.last_name LIKE #{lastName} || '%'-->
         SELECT DISTINCT
-            owner.id,
-            owner.first_name as firstName,
-            owner.last_name as lastName,
-            owner.address,
-            owner.city,
-            owner.telephone
-        FROM Owners owner left join pets on owner.id = pets.owner_id
-        WHERE owner.last_name LIKE #{lastName} || '%'
+            o.id, first_name as firstName, last_name as lastName, address, city, telephone
+        FROM owners o left join pets p on o.id = p.owner_id
+        WHERE last_name LIKE '%' || #{lastName} || '%'
+        ORDER BY o.id
 	</select>
 
     <select id="findById" parameterType="int" resultType="org.springframework.samples.petclinic.owner.Owner">
-        SELECT
-            owner.id,
-            owner.first_name as firstName,
-            owner.last_name as lastName,
-            owner.address,
-            owner.city,
-            owner.telephone
-        FROM Owners owner left join pets on owner.id = pets.owner_id
-        WHERE owner.id = #{id}
+<!--        SELECT-->
+<!--            owner.id,-->
+<!--            owner.first_name as firstName,-->
+<!--            owner.last_name as lastName,-->
+<!--            owner.address,-->
+<!--            owner.city,-->
+<!--            owner.telephone-->
+<!--        FROM Owners owner left join pets on owner.id = pets.owner_id-->
+<!--        WHERE owner.id = #{id}-->
+
+        SELECT DISTINCT
+        o.id,
+        first_name as firstName,
+        last_name as lastName,
+        address,
+        city,
+        telephone
+        FROM owners o left join pets p on o.id = p.owner_id
+        WHERE o.id = #{id}
     </select>
 
     <insert id="save" parameterType="org.springframework.samples.petclinic.owner.Owner" useGeneratedKeys="true" keyProperty="id">
@@ -51,4 +66,19 @@
             id = #{id}
     </update>
 
+    <select id="findByName" parameterType="org.springframework.samples.petclinic.owner.Owner" resultType="org.springframework.samples.petclinic.owner.Owner">
+        SELECT DISTINCT
+        o.id, first_name as firstName, last_name as lastName, address, city, telephone,
+            (SELECT COUNT(*)
+            FROM owners
+            WHERE UPPER(last_name) LIKE '%' || UPPER(#{lastName}) || '%'
+            AND UPPER(first_name) LIKE '%' || UPPER(#{firstName}) || '%') as totalCount
+
+        FROM owners o left join pets p on o.id = p.owner_id
+
+        WHERE UPPER(last_name) LIKE '%' || UPPER(#{lastName}) || '%'
+          AND UPPER(first_name) LIKE '%' || UPPER(#{firstName}) || '%'
+        ORDER BY o.id
+        OFFSET #{offset} ROWS FETCH FIRST #{limit} ROWS ONLY
+    </select>
 </mapper>

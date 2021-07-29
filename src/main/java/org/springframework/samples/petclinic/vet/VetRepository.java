@@ -17,7 +17,9 @@ package org.springframework.samples.petclinic.vet;
 
 import java.util.Collection;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.petclinic.owner.Owner;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -39,6 +41,6 @@ public interface VetRepository {
 	 */
 	@Transactional(readOnly = true)
 //	@Cacheable("vets")
-	Collection<Vet> findAll() throws DataAccessException;
+	Collection<Vet> findAll(@Param("offset") int offset, @Param("limit") int limit) throws DataAccessException;
 
 }

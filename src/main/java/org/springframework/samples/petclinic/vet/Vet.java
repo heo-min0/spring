@@ -76,4 +76,24 @@ public class Vet extends Person {
 		getSpecialtiesInternal().add(specialty);
 	}
 
+    private int totalCount;
+
+    public int getTotalCount() {
+        return totalCount;
+    }
+
+    public void setTotalCount(int totalCount) {
+        this.totalCount = totalCount;
+    }
+
+    @Override
+    public String toString() {
+        return "Vet{" +
+            "specialties=" + specialties +
+            ", lastName=" + this.getLastName() +
+            ", firstName=" + this.getFirstName() +
+            ", id=" + this.getId() +
+            ", totalCount=" + totalCount +
+            '}';
+    }
 }

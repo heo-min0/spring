@@ -3,12 +3,15 @@
 
 <mapper namespace="org.springframework.samples.petclinic.vet.VetRepository">
 
-    <select id="findAll" resultType="org.springframework.samples.petclinic.vet.Vet">
+    <select id="findAll" parameterType="map" resultType="org.springframework.samples.petclinic.vet.Vet">
         SELECT
             id,
             first_name as firstName,
-            last_name as lastName
+            last_name as lastName,
+            (SELECT COUNT(*) FROM vets) as totalCount
         FROM vets
+        ORDER BY id
+        OFFSET #{offset} ROWS FETCH FIRST #{limit} ROWS ONLY
     </select>
 
 </mapper>

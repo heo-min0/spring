@@ -23,5 +23,34 @@
       </tr>
     </tbody>
   </table>
+
+  <nav aria-label="Page navigation">
+      <ul class="pagination">
+          <li class="page-item" th:classappend="${pages.currentPage}==0 ? ' disabled'">
+              <a class="page-link" aria-label="Previous"
+                 th:href="${pages.currentPage}==0 ? '#':@{/vets.html(currentPage=${pages.currentPage-1})}" >
+                  <span aria-hidden="true">&laquo;</span>
+                  <span class="sr-only">Previous</span>
+              </a>
+          </li>
+
+          <th:block th:each="page : ${#numbers.sequence(1,pages.totalPage)}">
+              <li class="page-item">
+                  <a class="page-link" th:text="${page}"
+                     th:href="@{/vets.html(currentPage=${page-1})}"></a>
+              </li>
+          </th:block>
+
+          <li class="page-item" th:classappend="${pages.currentPage+1 == pages.totalPage} ? 'disabled'">
+              <a class="page-link" aria-label="Next"
+                 th:href="${pages.currentPage+1 == pages.totalPage} ? '#':@{/vets.html(currentPage=${pages.currentPage+1})}" >
+                  <span aria-hidden="true">&raquo;</span>
+                  <span class="sr-only">Next</span>
+              </a>
+          </li>
+
+      </ul>
+  </nav>
+
 </body>
 </html>

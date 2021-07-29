@@ -87,8 +87,23 @@ class OwnerController {
 			owner.setLastName(""); // empty string signifies broadest possible search
 		}
 
+        if (owner.getFirstName() == null) {
+            owner.setFirstName("");
+        }
+
+        Page param = new Page();
+//        param.setLastName(owner.getLastName());
+//        param.setFirstName(owner.getFirstName());
+//        param.setCurrentPage(0);
+
 		// find owners by last name
-		Collection<Owner> results = this.owners.findByLastName(owner.getLastName());
+//		Collection<Owner> results = this.owners.findByLastName(owner.getLastName());
+		Collection<Owner> results = this.owners.findByName(owner);
+
+        for(Owner o : results){
+            System.out.println(o.toString());
+        }
+
 		if (results.isEmpty()) {
 			// no owners found
 			result.rejectValue("lastName", "notFound", "not found");
@@ -102,9 +117,37 @@ class OwnerController {
 		else {
 			// multiple owners found
 			model.put("selections", results);
+
+            int totalCount = results.iterator().next().getTotalCount();
+            int limit = results.iterator().next().getLimit();
+            int totalPage = totalCount%limit > 0 ? totalCount/limit+1:totalCount/limit;
+            param.setTotalPage(totalPage);
+            System.out.println("totalCount = " + totalCount +", totalPage = "+ totalPage +", limit = "+ limit);
+
+			model.put("pages", param);
 			return "owners/ownersList";
 		}
 	}
+
+    @GetMapping("/owners/list")
+    public String processListOwnerForm(Owner owner, Page param, Map<String, Object> model) {
+	    owner.setOffset((param.getCurrentPage())*owner.getLimit());
+        System.out.println(owner.toString());
+        System.out.println(param.toString());
+
+        Collection<Owner> results = this.owners.findByName(owner);
+        model.put("selections", results);
+
+        int totalCount = results.iterator().next().getTotalCount();
+        int limit = results.iterator().next().getLimit();
+        int totalPage = totalCount%limit > 0 ? totalCount/limit+1:totalCount/limit;
+        param.setTotalPage(totalPage);
+        System.out.println("totalCount = " + totalCount +", totalPage = "+ totalPage +", limit = "+ limit);
+
+        model.put("pages", param);
+
+        return "owners/ownersList";
+    }
 
 	@GetMapping("/owners/{ownerId}/edit")
 	public String initUpdateOwnerForm(@PathVariable("ownerId") int ownerId, Model model) {

@@ -2,6 +2,7 @@ package org.springframework.samples.petclinic.config;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.dbcp2.BasicDataSource;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.mapper.MapperScannerConfigurer;
@@ -17,11 +18,17 @@ public class DBConfig {
 
     @Bean
     public DataSource dataSource() {
-        EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
-        return builder.setType(EmbeddedDatabaseType.H2)
-            .addScript("classpath:db/h2/schema.sql")
-            .addScript("classpath:db/h2/data.sql")
-            .build();
+//        EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
+//        return builder.setType(EmbeddedDatabaseType.H2)
+//            .addScript("classpath:db/h2/schema.sql")
+//            .addScript("classpath:db/h2/data.sql")
+//            .build();
+        BasicDataSource basicDataSource = new BasicDataSource();
+        basicDataSource.setDriverClassName("oracle.jdbc.driver.OracleDriver");
+        basicDataSource.setUrl("jdbc:oracle:thin:@nexgrid2.iptime.org:21521:ORCL");
+        basicDataSource.setUsername("COMMUTE_DEV");
+        basicDataSource.setPassword("grid#14ghdeo");
+        return basicDataSource;
     }
 
     @Bean

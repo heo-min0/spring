@@ -15,10 +15,13 @@
  */
 package org.springframework.samples.petclinic.vet;
 
+import org.springframework.samples.petclinic.owner.Owner;
+import org.springframework.samples.petclinic.owner.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Collection;
 import java.util.Map;
 
 /**
@@ -37,12 +40,24 @@ class VetController {
 	}
 
 	@GetMapping("/vets.html")
-	public String showVetList(Map<String, Object> model) {
+	public String showVetList(Page param, Map<String, Object> model) {
 		// Here we are returning an object of type 'Vets' rather than a collection of Vet
 		// objects so it is simpler for Object-Xml mapping
+        int limit = 10;
+        int offset = param.getCurrentPage()*limit;
+
 		Vets vets = new Vets();
-		vets.getVetList().addAll(this.vets.findAll());
-		model.put("vets", vets);
+        Collection<Vet> vet = this.vets.findAll(offset,limit);
+		vets.getVetList().addAll(vet);
+        model.put("vets", vets);
+
+        int totalCount = vet.iterator().next().getTotalCount();
+        param.setTotalPage(totalCount%limit > 0 ? totalCount/limit+1:totalCount/limit);
+        model.put("pages", param);
+
+//        for(Vet v : vet) System.out.println(v.toString());
+//        System.out.println(param.toString());
+
 		return "vets/vetList";
 	}
 
@@ -51,7 +66,7 @@ class VetController {
 		// Here we are returning an object of type 'Vets' rather than a collection of Vet
 		// objects so it is simpler for JSon/Object mapping
 		Vets vets = new Vets();
-		vets.getVetList().addAll(this.vets.findAll());
+		vets.getVetList().addAll(this.vets.findAll(0,10));
 		return vets;
 	}
 

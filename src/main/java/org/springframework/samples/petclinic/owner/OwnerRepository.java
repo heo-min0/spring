@@ -61,4 +61,7 @@ public interface OwnerRepository {
 
     void update(Owner owner);
 
+    @Transactional(readOnly = true)
+    Collection<Owner> findByName(Owner owner);
+
 }
