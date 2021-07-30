@@ -4,15 +4,6 @@
 <mapper namespace="org.springframework.samples.petclinic.owner.OwnerRepository">
 
     <select id="findByLastName" parameterType="string" resultType="org.springframework.samples.petclinic.owner.Owner">
-<!--        SELECT DISTINCT-->
-<!--            owner.id,-->
-<!--            owner.first_name as firstName,-->
-<!--            owner.last_name as lastName,-->
-<!--            owner.address,-->
-<!--            owner.city,-->
-<!--            owner.telephone-->
-<!--        FROM Owners owner left join pets on owner.id = pets.owner_id-->
-<!--        WHERE owner.last_name LIKE #{lastName} || '%'-->
         SELECT DISTINCT
             o.id, first_name as firstName, last_name as lastName, address, city, telephone
         FROM owners o left join pets p on o.id = p.owner_id
@@ -21,16 +12,6 @@
 	</select>
 
     <select id="findById" parameterType="int" resultType="org.springframework.samples.petclinic.owner.Owner">
-<!--        SELECT-->
-<!--            owner.id,-->
-<!--            owner.first_name as firstName,-->
-<!--            owner.last_name as lastName,-->
-<!--            owner.address,-->
-<!--            owner.city,-->
-<!--            owner.telephone-->
-<!--        FROM Owners owner left join pets on owner.id = pets.owner_id-->
-<!--        WHERE owner.id = #{id}-->
-
         SELECT DISTINCT
         o.id,
         first_name as firstName,

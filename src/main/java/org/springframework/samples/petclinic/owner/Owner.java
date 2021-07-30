@@ -167,27 +167,20 @@ public class Owner extends Person {
 		return null;
 	}
 
-//	@Override
-//	public String toString() {
-//		return new ToStringCreator(this)
-//
-//				.append("id", this.getId()).append("new", this.isNew()).append("lastName", this.getLastName())
-//				.append("firstName", this.getFirstName()).append("address", this.address).append("city", this.city)
-//				.append("telephone", this.telephone).append("totalcount", this.totalCount).toString();
-//	}
+	@Override
+	public String toString() {
+		return new ToStringCreator(this)
+				.append("id", this.getId())
+                .append("new", this.isNew())
+                .append("lastName", this.getLastName())
+				.append("firstName", this.getFirstName())
+                .append("address", this.address)
+                .append("city", this.city)
+				.append("telephone", this.telephone)
+                .append("totalcount", this.totalCount)
+                .append("offset", this.offset)
+                .append("limit", this.limit)
+            .toString();
+	}
 
-    @Override
-    public String toString() {
-        return "Owner{" +
-            "offset=" + offset +
-            ", limit=" + limit +
-            ", totalCount=" + totalCount +
-            ", address='" + address + '\'' +
-            ", city='" + city + '\'' +
-            ", telephone='" + telephone + '\'' +
-            ", pets=" + pets +
-            ", lastName=" + this.getLastName() +
-            ", firstName=" + this.getFirstName() +
-            '}';
-    }
 }

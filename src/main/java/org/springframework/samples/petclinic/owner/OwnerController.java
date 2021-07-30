@@ -91,13 +91,7 @@ class OwnerController {
             owner.setFirstName("");
         }
 
-        Page param = new Page();
-//        param.setLastName(owner.getLastName());
-//        param.setFirstName(owner.getFirstName());
-//        param.setCurrentPage(0);
-
 		// find owners by last name
-//		Collection<Owner> results = this.owners.findByLastName(owner.getLastName());
 		Collection<Owner> results = this.owners.findByName(owner);
 
         for(Owner o : results){
@@ -118,11 +112,11 @@ class OwnerController {
 			// multiple owners found
 			model.put("selections", results);
 
+            Page param = new Page();
             int totalCount = results.iterator().next().getTotalCount();
             int limit = results.iterator().next().getLimit();
             int totalPage = totalCount%limit > 0 ? totalCount/limit+1:totalCount/limit;
             param.setTotalPage(totalPage);
-            System.out.println("totalCount = " + totalCount +", totalPage = "+ totalPage +", limit = "+ limit);
 
 			model.put("pages", param);
 			return "owners/ownersList";
@@ -132,8 +126,6 @@ class OwnerController {
     @GetMapping("/owners/list")
     public String processListOwnerForm(Owner owner, Page param, Map<String, Object> model) {
 	    owner.setOffset((param.getCurrentPage())*owner.getLimit());
-        System.out.println(owner.toString());
-        System.out.println(param.toString());
 
         Collection<Owner> results = this.owners.findByName(owner);
         model.put("selections", results);
@@ -142,10 +134,8 @@ class OwnerController {
         int limit = results.iterator().next().getLimit();
         int totalPage = totalCount%limit > 0 ? totalCount/limit+1:totalCount/limit;
         param.setTotalPage(totalPage);
-        System.out.println("totalCount = " + totalCount +", totalPage = "+ totalPage +", limit = "+ limit);
 
         model.put("pages", param);
-
         return "owners/ownersList";
     }
 
