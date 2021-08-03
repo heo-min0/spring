@@ -89,7 +89,13 @@
             <artifactId>mybatis-spring</artifactId>
             <version>1.2.5</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.oracle</groupId>
+            <artifactId>ojdbc7</artifactId>
+            <version>1.1.1</version>
+            <scope>system</scope>
+            <systemPath>${lib.path}/ojdbc7.jar</systemPath>
+        </dependency>
 
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -242,11 +248,10 @@
             <version>2.12.1</version>
         </dependency>
         <dependency>
-            <groupId>org.oracle</groupId>
-            <artifactId>ojdbc7</artifactId>
-            <version>1.1.1</version>
-            <scope>system</scope>
-            <systemPath>${lib.path}/ojdbc7.jar</systemPath>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.12</version>
+            <optional>true</optional>
         </dependency>
 
     </dependencies>
