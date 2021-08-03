@@ -15,6 +15,7 @@
  */
 package org.springframework.samples.petclinic.vet;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.samples.petclinic.owner.Owner;
 import org.springframework.samples.petclinic.owner.Page;
 import org.springframework.stereotype.Controller;
@@ -30,6 +31,7 @@ import java.util.Map;
  * @author Ken Krebs
  * @author Arjen Poutsma
  */
+@Slf4j
 @Controller
 class VetController {
 
@@ -54,10 +56,7 @@ class VetController {
         int totalCount = vet.iterator().next().getTotalCount();
         param.setTotalPage(totalCount%limit > 0 ? totalCount/limit+1:totalCount/limit);
         model.put("pages", param);
-
-//        for(Vet v : vet) System.out.println(v.toString());
-//        System.out.println(param.toString());
-
+        log.info("limit {},offset {},{}",limit,offset,param.toString());
 		return "vets/vetList";
 	}
 

@@ -15,6 +15,7 @@
  */
 package org.springframework.samples.petclinic.owner;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.samples.petclinic.visit.VisitRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,6 +37,7 @@ import java.util.Map;
  * @author Arjen Poutsma
  * @author Michael Isvy
  */
+@Slf4j
 @Controller
 class OwnerController {
 
@@ -94,12 +96,8 @@ class OwnerController {
 		// find owners by last name
 		Collection<Owner> results = this.owners.findByName(owner);
 
-        for(Owner o : results){
-            System.out.println(o.toString());
-        }
-
 		if (results.isEmpty()) {
-			// no owners found
+			// no owners foundW
 			result.rejectValue("lastName", "notFound", "not found");
 			return "owners/findOwners";
 		}
@@ -112,13 +110,11 @@ class OwnerController {
 			// multiple owners found
 			model.put("selections", results);
 
-            Page param = new Page();
             int totalCount = results.iterator().next().getTotalCount();
             int limit = results.iterator().next().getLimit();
             int totalPage = totalCount%limit > 0 ? totalCount/limit+1:totalCount/limit;
-            param.setTotalPage(totalPage);
-
-			model.put("pages", param);
+            log.info("totalCount {},limit {},totalPage {}",totalCount,limit,totalPage);
+			model.put("pages", Page.builder().totalPage(totalPage).build());
 			return "owners/ownersList";
 		}
 	}
@@ -133,9 +129,8 @@ class OwnerController {
         int totalCount = results.iterator().next().getTotalCount();
         int limit = results.iterator().next().getLimit();
         int totalPage = totalCount%limit > 0 ? totalCount/limit+1:totalCount/limit;
-        param.setTotalPage(totalPage);
-
-        model.put("pages", param);
+        log.info("{},{}",owner.toString(),param.toString());
+        model.put("pages", param.builder().totalPage(totalPage).build());
         return "owners/ownersList";
     }
 
