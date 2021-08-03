@@ -18,11 +18,6 @@ public class DBConfig {
 
     @Bean
     public DataSource dataSource() {
-//        EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
-//        return builder.setType(EmbeddedDatabaseType.H2)
-//            .addScript("classpath:db/h2/schema.sql")
-//            .addScript("classpath:db/h2/data.sql")
-//            .build();
         BasicDataSource basicDataSource = new BasicDataSource();
         basicDataSource.setDriverClassName("oracle.jdbc.driver.OracleDriver");
         basicDataSource.setUrl("jdbc:oracle:thin:@nexgrid2.iptime.org:21521:ORCL");
